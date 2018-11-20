@@ -6,8 +6,8 @@ class CommentModelTest(unittest.TestCase):
 
 
     def setUp(self):
-            self.user_David = User(username = 'Macharia',password = '1234', email = 'machngatia@gmail.com')
-            self.new_comment = Comment(comment='This movie is the best thing since sliced bread',user = self.user_Macharia,pitch_id=12 )
+            self.user_david = User(username = 'david',password = '1234', email = 'machngatia@gmail.com')
+            self.new_comment = Comment(comment='All Kenyan All the Time',user = self.user_david,pitch_id=12 )
 
     def tearDown(self):
             Comment.query.delete()

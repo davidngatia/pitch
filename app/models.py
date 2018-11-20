@@ -19,9 +19,9 @@ class User(UserMixin,db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     pitches=db.relationship('Pitch',backref = 'user',lazy="dynamic")
-    # comments = db.relationship('Comment',backref = 'user',lazy = "dynamic")
-    # post_likes = db.relationship('PostLikes', backref=db.backref('user', lazy='joined'),
-                                 # lazy='dynamic', cascade='all, delete-orphan')
+    comments = db.relationship('Comment',backref = 'user',lazy = "dynamic")
+    post_likes = db.relationship('PostLikes', backref=db.backref('user', lazy='joined'),
+                                 lazy='dynamic', cascade='all, delete-orphan')
 
     @property
     def password(self):
@@ -43,27 +43,27 @@ class Role(db.Model):
 
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(255))
-    users = db.relationship('User',backref = 'role',lazy="dynamic")
+    user = db.relationship('User',backref = 'role',lazy="dynamic")
 
     def __repr__(self):
         return f'User {self.name}'
 
 
 class Pitch(db.Model):
-    __tablename__='pitches'
+    __tablename__='pitch'
     id = db.Column(db.Integer,primary_key = True)
     title = db.Column(db.String(200))
     pitch = db.Column(db.String(1000))
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    # comments= db.relationship('Comment', backref='title', lazy='dynamic')
-        # ser_likes = db.relationship('PostLikes', backref=db.backref('post', lazy='joined'),
-        #                          lazy='dynamic', cascade='all, delete-orphan')
-    # def __init__(self,id,title,pitch):
-    #     self.id = id
-    #     self.title = title
-    #
-    #     self.pitch = pitch
+    comments= db.relationship('Comment', backref='title', lazy='dynamic')
+    user_likes = db.relationship('PostLikes', backref=db.backref('post', lazy='joined'),
+                                 lazy='dynamic', cascade='all, delete-orphan')
+    def __init__(self,id,title,pitch):
+        self.id = id
+        self.title = title
+    
+        self.pitch = pitch
 
 
 
@@ -86,12 +86,12 @@ class Comment(db.Model):
     comment = db.Column(db.String(240))
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    pitch_id=db.Column(db.Integer,db.ForeignKey("pitches.id"))
+    pitch_id=db.Column(db.Integer,db.ForeignKey("pitch.id"))
 
-    # def __init__(self,id,title,comment):
-    #     self.id = id
-    #
-    #     self.comment = comment
+    def __init__(self,id,title,comment):
+        self.id = id
+    
+        self.comment = comment
 
     def save_comment(self):
         db.session.add(self)
