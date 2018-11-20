@@ -34,6 +34,7 @@ http://pitch.herokuapp.com/
     - Bootstrap 4
     - Heroku
     - Postgresql
+    -SQLAlchemy
 
 
 #### Clone the Repo and checkout into the project folder.
