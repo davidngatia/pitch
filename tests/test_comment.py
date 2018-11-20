@@ -6,7 +6,7 @@ class CommentModelTest(unittest.TestCase):
 
 
     def setUp(self):
-            self.user_James = User(username = 'Macharia',password = '1234', email = 'machngatia@gmail.com')
+            self.user_David = User(username = 'Macharia',password = '1234', email = 'machngatia@gmail.com')
             self.new_comment = Comment(comment='This movie is the best thing since sliced bread',user = self.user_Macharia,pitch_id=12 )
 
     def tearDown(self):
